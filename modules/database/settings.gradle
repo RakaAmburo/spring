@@ -1,6 +1,0 @@
-rootProject.name = 'data-base'
-
-include 'config'
-project(':config').projectDir = new File('/modules/config')
-include 'database'
-project(':database').projectDir = new File('/modules/database')
