@@ -14,12 +14,20 @@ public class UserController {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private UserService userService;
+
     @Value("${test.value}")
     private String valor;
 
     @GetMapping("/var")
     public String getVar() {
         return valor;
+    }
+
+    @GetMapping("/fm")
+    public List<VehicleDTO> getFromMongo() {
+        return userService.getVehicles();
     }
 
     @GetMapping

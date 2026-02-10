@@ -1,6 +1,8 @@
 rootProject.name = 'spring'
 
-include 'config', 'database'
+include 'config', 'database', 'mongo'
 project(':config').projectDir = new File('modules/config')
 project(':database').projectDir = new File('modules/database')
+project(':mongo').projectDir = new File('modules/mongo')
+
 

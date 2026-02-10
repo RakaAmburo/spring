@@ -26,4 +26,8 @@ gradle.rootProject {
         group 'app Modules'
         dependsOn ':database:bootRun'
     }
+    tasks.register('brMongo') {
+        group 'app Modules'
+        dependsOn ':mongo:bootRun'
+    }
 }
