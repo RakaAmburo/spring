@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+gradle.rootProject {
+    tasks.register('brConfig') {
+        group 'app Modules'
+        dependsOn ':config:bootRun'
+    }
+    tasks.register('brDatabase') {
+        group 'app Modules'
+        dependsOn ':database:bootRun'
+    }
+}

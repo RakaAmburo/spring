@@ -1,0 +1,6 @@
+rootProject.name = 'spring'
+
+include 'config', 'database'
+project(':config').projectDir = new File('modules/config')
+project(':database').projectDir = new File('modules/database')
+
