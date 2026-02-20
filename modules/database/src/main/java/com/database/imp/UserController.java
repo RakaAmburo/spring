@@ -1,8 +1,12 @@
 package com.database.imp;
 
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,10 +34,25 @@ public class UserController {
         return userService.getVehicles();
     }
 
+    @CircuitBreaker(name = "userController", fallbackMethod = "fallback")
+    @Retry(name = "userController")
     @GetMapping
-    public List<User> getAll() {
-        return repository.findAll();
+    public ResponseEntity<List<User>> getAll() {
+        return ResponseEntity.ok(repository.findAll());
     }
+
+    public ResponseEntity<List<User>> fallback(Exception  e) {
+        if (e instanceof CallNotPermittedException) {
+            userService.countFallbacks();
+            return ResponseEntity.status(503).body(null);
+        }
+        return ResponseEntity.status(500).body(null);
+    }
+
+    /*@ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<String> handleRuntimeException(RuntimeException e) {
+        return ResponseEntity.status(500).body("Error after retries");
+    }*/
 
     @PostMapping
     public User create(@RequestBody User user) {
@@ -85,5 +104,9 @@ RECORDS puede remplacer lombok en controllers?
  @Import({FluxLogger.class})
 
  subre todo version
+
+ analizar codigo mejorar warnings
+
+ java run rapido creo que era con un java espacial
 
         */

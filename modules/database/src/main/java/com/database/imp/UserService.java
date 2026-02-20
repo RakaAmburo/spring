@@ -22,4 +22,6 @@ public class UserService {
                 }
         ).getBody();
     }
+
+    public void countFallbacks(){}
 }

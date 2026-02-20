@@ -1,0 +1,15 @@
+resilience4j.circuitbreaker:
+  circuit-breaker-aspect-order: 1
+  instances:
+    userController:
+      slidingWindowSize: 10
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10s
+
+resilience4j.retry:
+  retry-aspect-order: 2
+  instances:
+    userController:
+      maxAttempts: 3
+      waitDuration: 1s
+      exponentialBackoffMultiplier: 2
