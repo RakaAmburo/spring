@@ -1,5 +1,7 @@
 package com.database.imp;
 
+import com.database.application.ports.input.UserAppService;
+import com.database.infrastructure.persistance.user.UserRepositoryAdapter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,14 +38,14 @@ class UserControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    UserRepository repository;
+    UserAppService userAppService;
 
     @MockBean
-    UserService userService;
+    UserServiceAux userServiceAux;
 
     @Test
     void testRetryYCircuitBreaker() throws Exception {
-        when(repository.findAll()).thenThrow(new RuntimeException());
+        when(userAppService.getAllUsers()).thenThrow(new RuntimeException());
 
         for (int i = 0; i < 5; i++) {
             mockMvc.perform(get("/users"))
@@ -53,17 +55,17 @@ class UserControllerTest {
         mockMvc.perform(get("/users"))
                 .andExpect(status().isServiceUnavailable());
 
-        verify(repository, times(10)).findAll();
-        verify(userService, times(1)).countFallbacks();
+        verify(userAppService, times(10)).getAllUsers();
+        verify(userServiceAux, times(1)).countFallbacks();
 
         Thread.sleep(1000);
 
-        reset(repository);
-        when(repository.findAll()).thenReturn(Collections.emptyList());
+        reset(userAppService);
+        when(userAppService.getAllUsers()).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/users"))
                 .andExpect(status().isOk());
 
-        verify(repository, times(1)).findAll();
+        verify(userAppService, times(1)).getAllUsers();
     }
 }

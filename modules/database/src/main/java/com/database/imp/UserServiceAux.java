@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserServiceAux {
     @Autowired
     private RestTemplate restTemplate;
 
