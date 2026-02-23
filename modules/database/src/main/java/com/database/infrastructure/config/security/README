@@ -1,0 +1,54 @@
+CUSTOM JWT COMPONENTS (FULL LIST)
+═══════════════════════════════════
+
+1. build.gradle
+   - Dependencies (spring-security, jjwt)
+
+2. application.properties
+   - jwt.secret
+   - jwt.expiration
+
+3. JwtService
+   - Generate token
+   - Validate token
+   - Extract username
+
+4. JwtAuthenticationFilter
+   - Intercept requests
+   - Extract Bearer token
+   - Set authentication
+
+5. SecurityConfig
+   - Public routes (/auth/**)
+   - Private routes (others)
+   - Add JWT filter
+
+6. AuthController
+   - POST /login endpoint
+   - Returns token
+
+7. LoginRequest
+   - username
+   - password
+
+OAUTH2 EXTERNAL (vs Custom JWT)
+════════════════════════════════
+
+REMOVE:
+• JwtService
+• JwtAuthenticationFilter
+• jwt.secret from properties
+
+ADD:
+[build.gradle]
+implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+[application.properties]
+spring.security.oauth2.resourceserver.jwt.issuer-uri=https://your-provider.com
+
+[SecurityConfig]
+.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+
+HOW IT WORKS:
+• Spring auto-validates tokens
+• You don't generate tokens, only consume
