@@ -1,29 +1,39 @@
 package com.database.infrastructure.config;
 
 import com.database.application.ports.input.UserAppService;
-import com.database.application.ports.output.UserRepository;
+import com.database.application.ports.input.VehicleAppService;
+import com.database.application.ports.output.UserRepositoryPort;
+import com.database.application.ports.output.VehicleApiPort;
 import com.database.application.services.UserAppServiceImp;
-import com.database.domain.user.UserDomainService;
-import com.database.infrastructure.persistance.user.UserEntityMapper;
-import com.database.infrastructure.persistance.user.UserJpaRepository;
-import com.database.infrastructure.persistance.user.UserRepositoryAdapter;
+import com.database.application.services.VehicleAppAppServiceImp;
+import com.database.domain.user.UserValidator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ApplicationConfig {
     @Bean
-    public UserAppService userAppService(UserRepository userRepository, UserDomainService userDomainService) {
-        return new UserAppServiceImp(userRepository, userDomainService);
+    public UserAppService userAppService(UserRepositoryPort userRepositoryPort, UserValidator userValidator) {
+        return new UserAppServiceImp(userRepositoryPort, userValidator);
     }
 
-    @Bean
-    public UserRepository userRepository(UserJpaRepository jpaRepository, UserEntityMapper mapper) {
-        return new UserRepositoryAdapter(jpaRepository, mapper);
-    }
+    /*@Bean
+    public UserRepositoryPort userRepository(UserJpaRepository jpaRepository, UserEntityMapper mapper) {
+        return new UserRepositoryPortAdapter(jpaRepository, mapper);
+    }*/
 
     @Bean
-    public UserDomainService userDomainService() {
-        return new UserDomainService();
+    public UserValidator userDomainService() {
+        return new UserValidator();
+    }
+
+    /*@Bean
+    public VehicleApiPort vehicleApiPort(RestTemplate restTemplate, VehicleResponseMapper vehicleResponseMapper){
+        return new VehicleRestAdapter(restTemplate, vehicleResponseMapper);
+    }*/
+
+    @Bean
+    public VehicleAppService vehicleServicePort(VehicleApiPort vehicleApiPort){
+        return new VehicleAppAppServiceImp(vehicleApiPort);
     }
 }

@@ -1,15 +1,17 @@
 package com.database.infrastructure.persistance.user;
 
-import com.database.application.ports.output.UserRepository;
+import com.database.application.ports.output.UserRepositoryPort;
 import com.database.domain.user.User;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-public class UserRepositoryAdapter implements UserRepository {
+@Component
+public class UserRepositoryPortAdapter implements UserRepositoryPort {
     private final UserJpaRepository jpaRepository;
     private final UserEntityMapper mapper;
 
-    public UserRepositoryAdapter(UserJpaRepository jpaRepository, UserEntityMapper mapper) {
+    public UserRepositoryPortAdapter(UserJpaRepository jpaRepository, UserEntityMapper mapper) {
         this.jpaRepository = jpaRepository;
         this.mapper = mapper;
     }

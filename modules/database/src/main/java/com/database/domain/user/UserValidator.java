@@ -1,4 +1,4 @@
 package com.database.domain.user;
 
-public class UserDomainService {
+public class UserValidator {
 }

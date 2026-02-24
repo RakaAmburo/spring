@@ -1,7 +1,7 @@
 package com.database.imp;
 
 import com.database.application.ports.input.UserAppService;
-import com.database.infrastructure.persistance.user.UserRepositoryAdapter;
+import com.database.application.ports.input.VehicleAppService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -42,7 +42,7 @@ class UserControllerTest {
     UserAppService userAppService;
 
     @MockBean
-    UserServiceAux userServiceAux;
+    VehicleAppService userServiceAux;
 
     @Test
     @WithMockUser(roles = "ADMIN")

@@ -1,9 +1,9 @@
 package com.database.infrastructure.controllers.user;
 
 import com.database.application.ports.input.UserAppService;
+import com.database.application.ports.input.VehicleAppService;
 import com.database.domain.user.User;
-import com.database.imp.UserServiceAux;
-import com.database.imp.VehicleDTO;
+import com.database.domain.vehicle.Vehicle;
 import com.database.infrastructure.persistance.user.UserEntity;
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -25,7 +25,7 @@ public class UserController {
     @Autowired
     private UserRequestMapper userRequestMapper;
     @Autowired
-    private UserServiceAux userServiceAux;
+    private VehicleAppService userServiceAux;
 
     @Autowired
     UserAppService userAppService;
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/fm")
-    public List<VehicleDTO> getFromMongo() {
+    public List<Vehicle> getFromMongo() {
         return userServiceAux.getVehicles();
     }
 

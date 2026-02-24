@@ -1,21 +1,21 @@
 package com.database.application.services;
 
 import com.database.application.ports.input.UserAppService;
-import com.database.application.ports.output.UserRepository;
+import com.database.application.ports.output.UserRepositoryPort;
 import com.database.domain.user.User;
-import com.database.domain.user.UserDomainService;
+import com.database.domain.user.UserValidator;
 
 
 import java.util.List;
 
 public class UserAppServiceImp implements UserAppService {
 
-    final UserRepository userRepository;
-    final UserDomainService userDomainService;
+    final UserRepositoryPort userRepository;
+    final UserValidator userValidator;
 
-    public UserAppServiceImp(UserRepository userRepository, UserDomainService userDomainService) {
-        this.userRepository = userRepository;
-        this.userDomainService = userDomainService;
+    public UserAppServiceImp(UserRepositoryPort userRepositoryPort, UserValidator userValidator) {
+        this.userRepository = userRepositoryPort;
+        this.userValidator = userValidator;
     }
 
     @Override
